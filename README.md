@@ -11,7 +11,7 @@
 
 # IDM Scanner
 
-#### Disclaimer: Usage of this scripts happens at your own risk!
+#### Disclaimer: Usage of these scripts happens at your own risk!
 
 ## Don’t do anything that is not mentioned in the tutorial, but be sure to do what is mentioned.
 
@@ -40,7 +40,7 @@ To ensure accuracy, please install so that the top surface of the sensor coil pl
 [Voron Mount](/STLs/Voron)
 
 ## 2. Install IDM Klipper Module
-Clone ```IDM``` from git and run the install script:
+Clone ```IDM``` from git and run the installation script:
 ```
 cd ~
 git clone https://github.com/ModularPrintingSystem/IDM.git
@@ -160,7 +160,7 @@ Home the machine in X and Y:
 G28 X Y
 ```
 
-Position the nozzle in the centre of the bed. You will nee dto adjust the coordinates for your machine, or feel free to use the web interface
+Position the nozzle in the centre of the bed. You will need to adjust the coordinates for your machine, or feel free to use the web interface
 ```
 G0 <your x-axis center>, <your y-axis center>
 ```
@@ -218,7 +218,7 @@ After the print finishes, the offset can be automatically applied to the model w
 Lowering the ```horizontal_z_move``` in ```z_tilt``` or ```quad_gantry_level``` to below ```trigger_distance``` + ```trigger_dive_threshold``` (default is 3) can make the leveling enter high-speed mode. If it is too low, you can raise the ```trigger_dive_threshold``` appropriately so that ```horizontal_z_move``` can be raised higher.
 
 ## 9. Enable The Accelerometer
-For versions that include an accelerometer (lis2dw), you can enable the accelerometer by adding the following to the configuration:
+For versions that include an accelerometer (```lis2dw```), you can enable the accelerometer by adding the following to the configuration:
 ```
 [lis2dw]
 cs_pin: idm:PA3
@@ -256,7 +256,16 @@ Execute the following command:
 ```
 python3 ~/katapult/scripts/flashtool.py -i can0 -f ~/IDM/Firmware/IDM_CAN_8kib_offset_1M.bin -u <found uuid>
 ```
+### 11.2.1 If you are currently using USB firmware and want to update
+Execute the following command:
+```
+cd ~/klipper/scripts 
+~/klippy-env/bin/python -c 'import flash_usb as u; u.enter_bootloader("<your device serial port address>")'
 
+python3 ~/katapult/scripts/flashtool.py -d  <your device serial port address> -f ~/IDM/Firmware/IDM_USB_8kib_offset.bin
+```
+The device serial port address refers to the address in the format /dev/serial/by-id/****. Please note that the serial port number for the second time should be different. Re-query it.
+Fill in your data and remember to remove the < > brackets.
 ## 12. Set to USB
 If you want to change to USB communication, you can flash the USB firmware:
 ```
